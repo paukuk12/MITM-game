@@ -1,0 +1,83 @@
+#!/usr/bin/env python3
+"""
+MITM Wi‑Fi Adventure — an interactive, text‑based game.
+Educational only: no real hacking instructions inside.
+Choose wisely and see how your decisions impact security, ethics, and the law.
+"""
+
+import sys
+
+def banner():
+    print(r"""
+ __  __ ___ _____ ___  ___           _     _            _            
+|  \/  |_ _|_   _/ _ \| _ \___ _  _| |_  (_)_ _  ___  | |_ ___ _ __ 
+| |\/| || |  | | | (_) |   / -_) || |  _| | | ' \/ -_) |  _/ -_) '_ \
+|_|  |_|___| |_|  \___/|_|_\\___|\_,_|\__| |_|_||_\___|  \__\___| .__/
+                                                               |_|   
+    """)
+
+
+def pause():
+    input("\n[ENTER] kontynuuj...\n")
+
+
+def bad_end(reason: str):
+    print(f"\n❌ Złe zakończenie: {reason}\n")
+    pause()
+    sys.exit(0)
+
+
+def good_end(message: str):
+    print(f"\n✅ Dobre zakończenie: {message}\n")
+    pause()
+    sys.exit(0)
+
+
+def intro():
+    banner()
+    print("Witaj w edukacyjnej grze o potencjalnych atakach MITM na publiczne Wi‑Fi.\n"
+          "Jesteś inżynierem‑stażystą w małej firmie bezpieczeństwa.\n"
+          "Twoim zadaniem jest ZBIERAĆ INFORMACJE (legalnie!) i podnieść świadomość klienta.\n")
+    pause()
+
+
+def cafe_scenario():
+    print("Jesteś w kawiarni, klient korzysta z niezabezpieczonej sieci Wi‑Fi \"CafeNet\".\n"
+          "1) Uruchomić fałszywy hotspot i przechwycić hasła.\n"
+          "2) Dyskretnie ostrzec właściciela kawiarni o ryzyku.\n"
+          "3) Zignorować sytuację i wypić latte.\n")
+    choice = input("Twój wybór (1/2/3): ")
+    if choice == "1":
+        bad_end("Przechwytywanie danych bez zgody jest nielegalne — zostajesz aresztowany.")
+    elif choice == "2":
+        print("\nWłaściciel docenia wskazówki i prosi o audyt.\n")
+        audit_scenario()
+    elif choice == "3":
+        bad_end("Brak reakcji — klient pada ofiarą ataku, reputacja Twojej firmy cierpi.")
+    else:
+        print("Niepoprawny wybór! Spróbuj ponownie.\n")
+        cafe_scenario()
+
+
+def audit_scenario():
+    print("Podczas audytu masz dwie ścieżki: \n"
+          "1) Przeprowadzić symulację MITM w środowisku laboratoryjnym, używając własnej sieci.\n"
+          "2) Spróbować ataku na żywo w godzinach szczytu, bo \"będzie ciekawie\".\n")
+    choice = input("Twój wybór (1/2): ")
+    if choice == "1":
+        print("\nSymulacja udana, prezentujesz wyniki klientowi z zaleceniami (HTTPS everywhere, WPA3, certyfikaty, segmentacja).\n")
+        good_end("Klient wdraża poprawki i poleca Twoją firmę dalej — etyczne hakerstwo wygrywa!")
+    elif choice == "2":
+        bad_end("Rzeczywisty ruch użytkowników zostaje zakłócony, klient zrywa umowę — i zgłasza naruszenie do regulatora.")
+    else:
+        print("Niepoprawny wybór! Spróbuj ponownie.\n")
+        audit_scenario()
+
+
+def main():
+    intro()
+    cafe_scenario()
+
+
+if __name__ == "__main__":
+    main()
